@@ -1,19 +1,22 @@
 <template>
   <div id="app">
     <HeaderTop></HeaderTop>
+    <index></index>
     <FootBottom></FootBottom>
   </div>
 </template>
 
 <script>
   import HeaderTop from "./components/public/HeaderTop";
-  import FootBottom from "./components/public/FootBottom"
+  import FootBottom from "./components/public/FootBottom";
+  import index from "./components/index/index"
 
   export default {
     name: 'app',
     components: {
       HeaderTop,
-      FootBottom
+      FootBottom,
+      index
     }
   }
 </script>
