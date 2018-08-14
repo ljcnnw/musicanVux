@@ -1,7 +1,7 @@
 <template>
   <div>
-    <tabbar>
-      <tabbar-item>
+    <tabbar id="foot">
+      <tabbar-item selected>
         <img slot="icon" src="../../../static/icon/index.svg">
         <span slot="label">首页</span>
       </tabbar-item>
@@ -9,7 +9,7 @@
         <img slot="icon" src="../../../static/icon/people.svg">
         <span slot="label">乐队</span>
       </tabbar-item>
-      <tabbar-item selected link="/component/demo">
+      <tabbar-item  link="/component/demo">
         <img slot="icon" src="../../../static/icon/yanchu.svg">
         <span slot="label">商演</span>
       </tabbar-item>
@@ -34,5 +34,7 @@
 </script>
 
 <style scoped>
-
+#foot{
+  position: fixed;
+}
 </style>
