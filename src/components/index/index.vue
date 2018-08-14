@@ -87,7 +87,7 @@
           <grid :cols="2">
             <grid-item>
               <card>
-                <img slot="header" src="../../../static/img/bg0.jpg" style="width:100%;display:block;height: 50px;">
+                <img slot="header" src="../../../static/img/bg0.jpg" style="width:100%;display:block;">
                 <div slot="content" class="card-padding">
                   <p style="color:#999;font-size:12px;">Posted on January 21, 2015</p>
                   <p style="font-size:14px;line-height:1.2;">Quisque eget vestibulum nulla. </p>
@@ -216,9 +216,6 @@
   }
   .middle{
     margin-bottom: 50px;
-  }
-  img{
-    height: 110px;
   }
 
 </style>
