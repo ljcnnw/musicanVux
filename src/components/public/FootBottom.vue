@@ -15,7 +15,9 @@
       </tabbar-item>
       <tabbar-item badge="2">
         <img slot="icon" src="../../../static/icon/person.svg">
-        <span slot="label">我的信息</span>
+        <span slot="label">
+        <router-link to="/userInfo">我的信息</router-link>
+        </span>
       </tabbar-item>
     </tabbar>
   </div>
@@ -23,6 +25,7 @@
 
 <script>
   import {Tabbar, TabbarItem} from 'vux'
+
 
   export default {
     name: "FootBottom",
