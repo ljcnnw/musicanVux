@@ -5,17 +5,25 @@ import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
 import Home from './components/index/index'
+import UserInfo from './components/user/UserInfo'
+import axios from 'axios'
+
 
 Vue.use(VueRouter)
+Vue.prototype.$axios = axios
 
-const routes = [{
+const routes = [
+  {
   path: '/',
   component: Home
-}]
+  },{
+    path: '/userInfo',
+    component: UserInfo
+  }]
 
 const router = new VueRouter({
   routes,
-  mode:"history"
+  mode: "history"
 })
 
 FastClick.attach(document.body)

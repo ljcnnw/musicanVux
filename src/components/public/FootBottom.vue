@@ -1,22 +1,26 @@
 <template>
   <div>
     <tabbar id="foot">
-      <tabbar-item selected>
+
+      <tabbar-item selected link="/">
         <img slot="icon" src="../../../static/icon/index.svg">
-        <span slot="label">首页</span>
+        <span slot="label">
+          首页
+        </span>
       </tabbar-item>
+
       <tabbar-item show-dot>
         <img slot="icon" src="../../../static/icon/people.svg">
         <span slot="label">乐队</span>
       </tabbar-item>
-      <tabbar-item  link="/component/demo">
+      <tabbar-item link="/component/demo">
         <img slot="icon" src="../../../static/icon/yanchu.svg">
         <span slot="label">商演</span>
       </tabbar-item>
-      <tabbar-item badge="2">
+      <tabbar-item badge="2" link="/userInfo">
         <img slot="icon" src="../../../static/icon/person.svg">
         <span slot="label">
-        <router-link to="/userInfo">我的信息</router-link>
+          我的信息
         </span>
       </tabbar-item>
     </tabbar>
@@ -37,7 +41,7 @@
 </script>
 
 <style scoped>
-#foot{
-  position: fixed;
-}
+  #foot {
+    position: fixed;
+  }
 </style>
