@@ -16,36 +16,54 @@
 </template>
 
 <script>
-  import {Divider,Group,Cell,XTextarea,XInput,XButton} from 'vux';
-  import qs from 'qs';
+  import {Divider, Group, Cell, XTextarea, XInput, XButton, Alert, AlertModule} from 'vux';
+
   export default {
     name: "UserInfo",
-    data(){
-      return{
-        user:{},
-        loginData:{
-          userName:'',
-          userPass:''
+    data() {
+      return {
+        user: {},
+        loginData: {
+          userName: '',
+          userPass: ''
         },
-        testData:''
+        testData: ''
       }
     },
     created() {
 
     },
-    components:{
+    components: {
       Divider,
       Group,
       Cell,
       XTextarea,
       XInput,
-      XButton
+      XButton,
+      Alert,
+      AlertModule
+
     },
-    methods:{
-      login(){
-        this.$axios.post('http://localhost:8090/user/test2',this.loginData).then(
-          function(){
-            console.log(this.loginData);
+    methods: {
+      login() {
+        this.$axios.post('http://localhost:8090/user/login', this.loginData).then(
+          function (data) {
+            if (data.data.success == false) {
+              AlertModule.show(
+                {
+                  title: '系统消息',
+                  content:data.data.message
+                }
+              )
+            } else {
+              AlertModule.show(
+                {
+                  title: '系统消息',
+                  content:'登录成功'
+                }
+              )
+
+            }
           }
         )
       }

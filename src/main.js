@@ -8,9 +8,11 @@ import Home from './components/index/index'
 import UserInfo from './components/user/UserInfo'
 import axios from 'axios'
 import qs from 'qs';
+import  { AlertPlugin } from 'vux';
 
 
 Vue.use(VueRouter)
+Vue.use(AlertPlugin)
 Vue.prototype.$axios = axios
 
 
