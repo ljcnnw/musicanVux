@@ -1,14 +1,13 @@
 <template>
   <div>
     <Divider>登陆账号</Divider>
-    <form id="loginForm">
+    <form id="loginForm" ref="loginForm">
       <Group>
         <XInput type="text" title="用户名：" placeholder="请输入用户名" v-model="loginData.userName"></XInput>
         <XInput type="text" title="密码：" placeholder="请输入密码" v-model="loginData.userPass"></XInput>
-        <XInput type="text" title="密码：" placeholder="请输入密码" v-model="testData"></XInput>
         <br/>
-        <XButton type="primary" @click.native="login($event)" action-type="button">登陆</XButton>
-        <XButton type="primary">注册</XButton>
+        <XButton type="primary" @click.native="login()" action-type="button">登陆</XButton>
+        <XButton type="primary" @click.native="" action-type="button">注册</XButton>
       </Group>
     </form>
 
@@ -43,20 +42,12 @@
       XButton
     },
     methods:{
-      login(event){
-        event.preventDefault();
-        var lData = qs.stringify(this.loginData);
-        var test = JSON.stringify(this.loginData);
-        this.$axios({
-          method: 'post',
-          url: 'http://localhost:8090/user/test',
-          data:{
-            test
+      login(){
+        this.$axios.post('http://localhost:8090/user/test2',this.loginData).then(
+          function(){
+            console.log(this.loginData);
           }
-        }).then(function () {
-          console.log(lData);
-          console.log(test);
-        })
+        )
       }
     }
   }

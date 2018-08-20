@@ -7,10 +7,14 @@ import App from './App'
 import Home from './components/index/index'
 import UserInfo from './components/user/UserInfo'
 import axios from 'axios'
+import qs from 'qs';
 
 
 Vue.use(VueRouter)
 Vue.prototype.$axios = axios
+
+
+Vue.prototype.$qs = qs;
 
 const routes = [
   {
@@ -35,3 +39,4 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app-box')
+
