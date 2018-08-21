@@ -7,7 +7,7 @@
         <XInput type="text" title="密码：" placeholder="请输入密码" v-model="loginData.userPass"></XInput>
         <br/>
         <XButton type="primary" @click.native="login()" action-type="button">登陆</XButton>
-        <XButton type="primary" @click.native="" action-type="button">注册</XButton>
+        <XButton type="primary" action-type="button" @click.native="regist()">注册</XButton>
       </Group>
     </form>
 
@@ -66,6 +66,9 @@
             }
           }
         )
+      },
+      regist(){
+        this.$router.push('/registUser')
       }
     }
   }

@@ -6,9 +6,10 @@ import VueRouter from 'vue-router'
 import App from './App'
 import Home from './components/index/index'
 import UserInfo from './components/user/UserInfo'
+import RegistUser from './components/user/RegistUser'
 import axios from 'axios'
 import qs from 'qs';
-import  { AlertPlugin } from 'vux';
+import {AlertPlugin} from 'vux';
 
 
 Vue.use(VueRouter)
@@ -20,12 +21,16 @@ Vue.prototype.$qs = qs;
 
 const routes = [
   {
-  path: '/',
-  component: Home
-  },{
+    path: '/',
+    component: Home
+  }, {
     path: '/userInfo',
     component: UserInfo
-  }]
+  }, {
+    path: '/registUser',
+    component: RegistUser
+  }
+]
 
 const router = new VueRouter({
   routes,
