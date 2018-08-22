@@ -20,7 +20,7 @@
         </cell>
         <x-input type="text" title="个性签名："></x-input>
         <x-input type="text" title="个人简介："></x-input>
-        <x-address title="选择地址：" placeholder="请选择地址" :list="addressData" ></x-address>
+        <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test" v-model="adress" ></x-address>
       </Group>
       <div>
         <Popup v-model="showMusica" position="bottom" max-height="50%">
@@ -28,7 +28,7 @@
                         right-text="确定" title="请选择你喜欢的音乐风格" :show-bottom-border="false"
                         @on-click-left="showMusica = false"
                         @on-click-right="checkMusic()"></popup-header>
-          <checklist ref="musica" :options="musicaList"></checklist>
+          <checklist ref="musica" :options="musicaList" ></checklist>
 
         </Popup>
       </div>
@@ -84,6 +84,7 @@
         musicaList: ['1', '2', '3'],
         musicaStyle: '请选择你喜欢的音乐风格',
         addressData: ChinaAddressV4Data,
+        adress:[]
       }
     },
     methods: {
@@ -99,6 +100,9 @@
         })
         this.musicaStyle = ttt;
         this.showMusica = false;
+      },
+      test(ids,names){
+        console.log(names)
       }
 
 
