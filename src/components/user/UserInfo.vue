@@ -8,6 +8,7 @@
         <br/>
         <XButton type="primary" @click.native="login()" action-type="button">登陆</XButton>
         <XButton type="primary" action-type="button" @click.native="regist()">注册</XButton>
+
       </Group>
     </form>
 

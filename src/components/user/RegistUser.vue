@@ -1,7 +1,7 @@
 <template>
   <div id="registInfo">
 
-      <Divider ><h3 >用户注册</h3></Divider>
+    <Divider><h3>用户注册</h3></Divider>
 
     <form>
       <Group label-width="5.5em" label-margin-right="2em" label-align="justify">
@@ -12,24 +12,24 @@
         <x-input is-type="email" title="邮箱："></x-input>
         <x-input is-type="china-mobile" title="手机号："></x-input>
       </Group>
-      <Group label-width="5.5em" label-margin-right="2em" label-align="justify">
+      <Group>
         <Divider><h4>详细信息（选填）</h4></Divider>
-        <cell is-link title="1111" @click.native="showMusica = true">
-        </cell>
-        <cell-box is-link >111</cell-box>
         <x-input type="text" title="乐队名称："></x-input>
-        <x-input type="text" title="音乐风格："></x-input>
+        <cell is-link @click.native="showMusica = true" title="音乐风格：">
+          {{musicaStyle}}
+        </cell>
         <x-input type="text" title="个性签名："></x-input>
         <x-input type="text" title="个人简介："></x-input>
+        <x-address title="选择地址：" placeholder="请选择地址" :list="addressData" ></x-address>
       </Group>
-      <div v-transfer-dom>
+      <div>
         <Popup v-model="showMusica" position="bottom" max-height="50%">
           <popup-header left-text="取消"
-                        right-text="确定" title="请选择你喜欢的音乐风格" show-bottom-border="false" @on-click-left="showMusica = false"
-                        @on-click-right="showMusica = false"></popup-header>
-          <group>
-            <popup-radio></popup-radio>
-          </group>
+                        right-text="确定" title="请选择你喜欢的音乐风格" :show-bottom-border="false"
+                        @on-click-left="showMusica = false"
+                        @on-click-right="checkMusic()"></popup-header>
+          <checklist ref="musica" :options="musicaList"></checklist>
+
         </Popup>
       </div>
       <Group>
@@ -40,7 +40,24 @@
 </template>
 
 <script>
-  import {Divider, Group, Cell, XTextarea, XInput, XButton, Alert, AlertModule,Popup,PopupRadio,PopupHeader,CellBox  } from 'vux';
+  import {
+    Divider,
+    Group,
+    Cell,
+    XTextarea,
+    XInput,
+    XButton,
+    Alert,
+    AlertModule,
+    Popup,
+    PopupRadio,
+    PopupHeader,
+    CellBox,
+    Radio,
+    Checklist,
+    XAddress,
+    ChinaAddressV4Data
+  } from 'vux';
 
   export default {
     name: "RegistUser",
@@ -56,12 +73,35 @@
       Popup,
       PopupRadio,
       PopupHeader,
-      CellBox
+      CellBox,
+      Radio,
+      Checklist,
+      XAddress
     },
-    data(){
-      return{
-        showMusica:false
+    data() {
+      return {
+        showMusica: false,
+        musicaList: ['1', '2', '3'],
+        musicaStyle: '请选择你喜欢的音乐风格',
+        addressData: ChinaAddressV4Data,
       }
+    },
+    methods: {
+      checkMusic() {
+        let musica1 = this.$refs.musica.getFullValue();
+        let ttt = '';
+        musica1.forEach((item, index) => {
+          if(index == 0){
+            ttt = ttt + item.value;
+          }else {
+            ttt = ttt +","+ item.value;
+          }
+        })
+        this.musicaStyle = ttt;
+        this.showMusica = false;
+      }
+
+
     }
   }
 </script>
