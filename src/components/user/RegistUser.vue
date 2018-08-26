@@ -10,10 +10,15 @@
         <x-input type="password" title="密码："></x-input>
         <x-input type="password" title="确认密码："></x-input>
         <x-input is-type="email" title="邮箱："></x-input>
-        <x-input is-type="china-mobile" title="手机号："></x-input>
       </Group>
       <Group>
         <Divider><h4>详细信息（选填）</h4></Divider>
+        <cell title="头像："></cell>
+        <cell>
+          <img src="../../../static/img/bg0.jpg" style="width:95%;" slot="title"/>
+          <input type="file" accept="image/*" />
+        </cell>
+        <x-input is-type="china-mobile" title="手机号："></x-input>
         <x-input type="text" title="乐队名称："></x-input>
         <cell is-link @click.native="showMusica = true" title="音乐风格：">
           {{musicaStyle}}
