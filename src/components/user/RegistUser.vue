@@ -6,26 +6,28 @@
     <form>
       <Group label-width="5.5em" label-margin-right="2em" label-align="justify">
         <Divider><h4>必填信息</h4></Divider>
-        <x-input type="text" title="用户名："></x-input>
-        <x-input type="password" title="密码："></x-input>
+        <x-input type="text" title="账号：" v-model="user.userName"></x-input>
+        <x-input type="password" title="密码：" v-model="user.userPass"></x-input>
         <x-input type="password" title="确认密码："></x-input>
-        <x-input is-type="email" title="邮箱："></x-input>
+        <x-input type="text" title="昵称：" v-model="userInfo.userInfoName"></x-input>
+        <x-input is-type="email" title="邮箱：" v-model="userInfo.userInfoEmail"></x-input>
       </Group>
       <Group>
         <Divider><h4>详细信息（选填）</h4></Divider>
         <cell title="头像："></cell>
         <cell>
           <img src="../../../static/img/bg0.jpg" style="width:95%;" slot="title"/>
-          <input type="file" accept="image/*" />
+          <input type="file" accept="image/*"/>
         </cell>
-        <x-input is-type="china-mobile" title="手机号："></x-input>
-        <x-input type="text" title="乐队名称："></x-input>
-        <cell is-link @click.native="showMusica = true" title="音乐风格：">
-          {{musicaStyle}}
+        <x-input is-type="china-mobile" title="手机号：" v-model="userInfo.userInfoTel"></x-input>
+        <x-input type="text" title="乐队名称：" ></x-input>
+        <cell is-link @click.native="showMusica = true" title="音乐风格：" v-model="userInfo.musicStyle">
+          {{userInfo.musicStyle}}
         </cell>
         <x-input type="text" title="个性签名："></x-input>
         <x-input type="text" title="个人简介："></x-input>
-        <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test" v-model="adress" ></x-address>
+        <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test"
+                   v-model="userInfo.userInfoAddress"></x-address>
       </Group>
       <div>
         <Popup v-model="showMusica" position="bottom" max-height="50%">
@@ -33,7 +35,7 @@
                         right-text="确定" title="请选择你喜欢的音乐风格" :show-bottom-border="false"
                         @on-click-left="showMusica = false"
                         @on-click-right="checkMusic()"></popup-header>
-          <checklist ref="musica" :options="musicaList" ></checklist>
+          <checklist ref="musica" :options="musicaList"></checklist>
 
         </Popup>
       </div>
@@ -87,9 +89,22 @@
       return {
         showMusica: false,
         musicaList: ['1', '2', '3'],
-        musicaStyle: '请选择你喜欢的音乐风格',
         addressData: ChinaAddressV4Data,
-        adress:[]
+
+        user: {
+          userName: '',
+          userPass: ''
+        },
+        userInfo: {
+          userInfoName: '',
+          userInfoTel: '',
+          userInfoEmail: '',
+          userInfoSign: '',
+          userInfoIntro: '',
+          musicStyle:  '请选择你喜欢的音乐风格',
+          userInfoAddress:[],
+          userInfoImg:''
+        }
       }
     },
     methods: {
@@ -97,16 +112,16 @@
         let musica1 = this.$refs.musica.getFullValue();
         let ttt = '';
         musica1.forEach((item, index) => {
-          if(index == 0){
+          if (index == 0) {
             ttt = ttt + item.value;
-          }else {
-            ttt = ttt +","+ item.value;
+          } else {
+            ttt = ttt + "," + item.value;
           }
         })
-        this.musicaStyle = ttt;
+        this.userInfo.musicStyle = ttt;
         this.showMusica = false;
       },
-      test(ids,names){
+      test(ids, names) {
         console.log(names)
       }
 
