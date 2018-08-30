@@ -6,8 +6,8 @@
     <form>
       <Group label-width="5.5em" label-margin-right="2em" label-align="justify">
         <Divider><h4>必填信息</h4></Divider>
-        <x-input type="text" title="账号：" v-model="user.userName"></x-input>
-        <x-input type="password" title="密码：" v-model="user.userPass"></x-input>
+        <x-input type="text" title="账号：" v-model="userInfo.userName"></x-input>
+        <x-input type="password" title="密码：" v-model="userInfo.userPass"></x-input>
         <x-input type="password" title="确认密码："></x-input>
         <x-input type="text" title="昵称：" v-model="userInfo.userInfoName"></x-input>
         <x-input is-type="email" title="邮箱：" v-model="userInfo.userInfoEmail"></x-input>
@@ -20,7 +20,7 @@
           <input type="file" accept="image/*"/>
         </cell>
         <x-input is-type="china-mobile" title="手机号：" v-model="userInfo.userInfoTel"></x-input>
-        <x-input type="text" title="乐队名称：" ></x-input>
+        <x-input type="text" title="乐队名称："></x-input>
         <cell is-link @click.native="showMusica = true" title="音乐风格：" v-model="userInfo.musicStyle">
           {{userInfo.musicStyle}}
         </cell>
@@ -40,7 +40,7 @@
         </Popup>
       </div>
       <Group>
-        <XButton type="primary" @click.native="" action-type="button">注册</XButton>
+        <XButton type="primary" @click.native="regist()" action-type="button">注册</XButton>
       </Group>
     </form>
   </div>
@@ -91,19 +91,18 @@
         musicaList: ['1', '2', '3'],
         addressData: ChinaAddressV4Data,
 
-        user: {
-          userName: '',
-          userPass: ''
-        },
+
         userInfo: {
+          userName: '',
+          userPass: '',
           userInfoName: '',
           userInfoTel: '',
           userInfoEmail: '',
           userInfoSign: '',
           userInfoIntro: '',
-          musicStyle:  '请选择你喜欢的音乐风格',
-          userInfoAddress:[],
-          userInfoImg:''
+          musicStyle: '请选择你喜欢的音乐风格',
+          userInfoAddress: [],
+          userInfoImg: ''
         }
       }
     },
@@ -123,6 +122,28 @@
       },
       test(ids, names) {
         console.log(names)
+      },
+      regist() {
+        this.$axios.post('http://localhost:8090/userInfo/regist', this.userInfo).then(
+          function (data) {
+            if (data.data.success == false) {
+              AlertModule.show(
+                {
+                  title: '系统消息',
+                  content: data.data.message
+                }
+              )
+            } else {
+              AlertModule.show(
+                {
+                  title: '系统消息',
+                  content: '登录成功'
+                }
+              )
+
+            }
+          }
+        )
       }
 
 
