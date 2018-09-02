@@ -6,28 +6,29 @@
     <form>
       <Group label-width="5.5em" label-margin-right="2em" label-align="justify">
         <Divider><h4>必填信息</h4></Divider>
-        <x-input type="text" title="账号：" v-model="userInfo.userName"></x-input>
-        <x-input type="password" title="密码：" v-model="userInfo.userPass"></x-input>
+        <x-input type="text" novalidate :icon-type="iconType" title="账号：" v-model="sysUser.userName" @on-blur="checkUserName"></x-input>
+        <x-input type="password" title="密码：" v-model="sysUser.userPass"></x-input>
         <x-input type="password" title="确认密码："></x-input>
-        <x-input type="text" title="昵称：" v-model="userInfo.userInfoName"></x-input>
-        <x-input is-type="email" title="邮箱：" v-model="userInfo.userInfoEmail"></x-input>
+        <x-input type="text" title="昵称：" v-model="sysUser.userInfo.userInfoName"></x-input>
+        <x-input is-type="email" title="邮箱：" v-model="sysUser.userInfo.userInfoEmail"></x-input>
       </Group>
       <Group>
         <Divider><h4>详细信息（选填）</h4></Divider>
         <cell title="头像："></cell>
         <cell>
-          <img src="../../../static/img/bg0.jpg" style="width:95%;" slot="title"/>
-          <input type="file" accept="image/*"/>
+          <img src="../../../static/img/bg0.jpg" style="width:110px;height:105px;border-radius: 95%" slot="title" id="touxiangimg"/>
+          <input type="file" accept="image/*"  v-on:change="great(touxiangImg)"/>
         </cell>
-        <x-input is-type="china-mobile" title="手机号：" v-model="userInfo.userInfoTel"></x-input>
+        <x-input is-type="china-mobile" title="手机号：" v-model="sysUser.userInfo.userInfoTel"></x-input>
         <x-input type="text" title="乐队名称："></x-input>
-        <cell is-link @click.native="showMusica = true" title="音乐风格：" v-model="userInfo.musicStyle">
-          {{userInfo.musicStyle}}
+        <cell is-link @click.native="showMusica = true" title="音乐风格：" v-model="sysUser.userInfo.musicStyle">
+          {{sysUser.userInfo.musicStyle}}
         </cell>
         <x-input type="text" title="个性签名："></x-input>
         <x-input type="text" title="个人简介："></x-input>
+
         <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test"
-                   v-model="userInfo.userInfoAddress"></x-address>
+              ></x-address>
       </Group>
       <div>
         <Popup v-model="showMusica" position="bottom" max-height="50%">
@@ -90,19 +91,22 @@
         showMusica: false,
         musicaList: ['1', '2', '3'],
         addressData: ChinaAddressV4Data,
-
-
-        userInfo: {
+        iconType:'error',
+        touxiangImg:this.$store.state.a,
+        sysUser: {
           userName: '',
           userPass: '',
-          userInfoName: '',
-          userInfoTel: '',
-          userInfoEmail: '',
-          userInfoSign: '',
-          userInfoIntro: '',
-          musicStyle: '请选择你喜欢的音乐风格',
-          userInfoAddress: [],
-          userInfoImg: ''
+          userInfo:{
+            userInfoName: '',
+            userInfoTel: '',
+            userInfoEmail: '',
+            userInfoSign: '',
+            userInfoIntro: '',
+            musicStyle: '请选择你喜欢的音乐风格',
+            address: [],
+            userInfoImg: ''
+          }
+
         }
       }
     },
@@ -117,14 +121,23 @@
             ttt = ttt + "," + item.value;
           }
         })
-        this.userInfo.musicStyle = ttt;
+        this.sysUser.userInfo.musicStyle = ttt;
         this.showMusica = false;
       },
       test(ids, names) {
-        console.log(names)
+        this.sysUser.userInfo.address = names;
+      },
+      checkUserName(val){
+        console.log(val);
+        if(val == ''){
+          this.iconType = 'error';
+          console.log(this.iconType);
+        }else {
+          this.iconType = 'success';
+        }
       },
       regist() {
-        this.$axios.post('http://localhost:8090/userInfo/regist', this.userInfo).then(
+        this.$axios.post('http://localhost:8090/userInfo/regist', this.sysUser).then(
           function (data) {
             if (data.data.success == false) {
               AlertModule.show(
@@ -144,11 +157,21 @@
             }
           }
         )
+      },
+      great(vul){
+          console.log("111"+this.touxiangImg);
+
+
+
+      },
+      postImg(){
+        this.$axios.post()
       }
 
 
     }
   }
+
 </script>
 
 <style scoped>
