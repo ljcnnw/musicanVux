@@ -12,6 +12,7 @@ import qs from 'qs';
 import {AlertPlugin} from 'vux';
 
 
+
 Vue.use(VueRouter)
 Vue.use(AlertPlugin)
 Vue.prototype.$axios = axios
