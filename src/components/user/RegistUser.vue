@@ -15,11 +15,13 @@
       </Group>
       <Group>
         <Divider><h4>详细信息（选填）</h4></Divider>
-        <cell title="头像："></cell>
+        <cell title="头像：">
+          点击图片上传头像
+        </cell>
         <cell>
           <img src="../../../static/img/bg0.jpg" style="width:110px;height:105px;border-radius: 95%" slot="title"
-               id="touxiangimg"/>
-          <input type="file" accept="image/*" v-on:change="great(touxiangImg)"/>
+               id="touxiangimg" @click="upload"/>
+          <input ref="avatar" style="display: none" type="file" accept="image/*" v-on:change="great(touxiangImg)"/>
         </cell>
         <x-input is-type="china-mobile" title="手机号：" v-model="sysUser.userInfo.userInfoTel"></x-input>
         <x-input type="text" title="乐队名称："></x-input>
@@ -38,6 +40,7 @@
                     :outputSize="option.size"
                     :autoCropWidth="option.autoCropWidth"
                     :autoCropHeight="option.autoCropHeight"
+                    :centerBox="option.centerBox"
         ></VueCropper>
       </div>
 
@@ -105,12 +108,13 @@
     data() {
       return {
         option: {
-          imgUrl: '../../../static/img/bg0.jpg',
+          imgUrl: '../../../static/img/bg1.jpg',
           size: 0.5,
           autoCrop: true,
           fixedBox: true,
           autoCropWidth: 110,
-          autoCropHeight: 110
+          autoCropHeight: 110,
+          centerBox: true
         },
 
         showMusica: false,
@@ -189,6 +193,9 @@
       },
       postImg() {
         this.$axios.post()
+      },
+      upload() {
+        this.$refs.avatar.click();
       }
 
 
