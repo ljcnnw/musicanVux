@@ -21,7 +21,7 @@
         <cell>
           <img src="../../../static/img/bg0.jpg" style="width:110px;height:105px;border-radius: 95%" slot="title"
                id="touxiangimg" @click="upload"/>
-          <input ref="avatar" style="display: none" type="file" accept="image/*" v-on:change="great(touxiangImg)"/>
+          <input ref="avatar" style="display: none" type="file" accept="image/*" v-on:change="great()"/>
         </cell>
         <x-input is-type="china-mobile" title="手机号：" v-model="sysUser.userInfo.userInfoTel"></x-input>
         <x-input type="text" title="乐队名称："></x-input>
@@ -53,6 +53,23 @@
           <checklist ref="musica" :options="musicaList"></checklist>
 
         </Popup>
+      </div>
+      <div>
+        <popup v-model="showImg" position="bottom"  height="50%">
+          <popup-header left-text="取消"
+                        right-text="确定" title="请选择你喜欢的音乐风格" :show-bottom-border="false"
+                        @on-click-left="showMusica = false"
+                        @on-click-right="checkMusic()"></popup-header>
+          <VueCropper style="width:300px;height: 300px;margin:0 auto;" ref="cropper" :autoCrop="option.autoCrop"
+                      :fixedBox="option.fixedBox" :img="option.imgUrl"
+                      :outputSize="option.size"
+                      :autoCropWidth="option.autoCropWidth"
+                      :autoCropHeight="option.autoCropHeight"
+                      :centerBox="option.centerBox"
+                      :info="option.info"
+
+          ></VueCropper>
+        </popup>
       </div>
       <Group>
         <XButton type="primary" @click.native="regist()" action-type="button">注册</XButton>
@@ -108,15 +125,16 @@
     data() {
       return {
         option: {
-          imgUrl: '../../../static/img/bg1.jpg',
+          imgUrl: '../../../static/img/bg0.jpg',
           size: 0.5,
           autoCrop: true,
           fixedBox: true,
-          autoCropWidth: 110,
-          autoCropHeight: 110,
-          centerBox: true
+          autoCropWidth: 300,
+          autoCropHeight: 200,
+          centerBox: true,
+          info:false
         },
-
+        showImg:false,
         showMusica: false,
         musicaList: ['1', '2', '3'],
         addressData: ChinaAddressV4Data,
@@ -186,9 +204,8 @@
           }
         )
       },
-      great(vul) {
-        console.log("111" + this.touxiangImg);
-
+      great() {
+        this.showImg = true;
 
       },
       postImg() {
