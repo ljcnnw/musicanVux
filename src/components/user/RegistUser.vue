@@ -34,15 +34,6 @@
         <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test"
         ></x-address>
       </Group>
-      <div>
-        <VueCropper style="width:300px;height:300px" ref="cropper" :autoCrop="option.autoCrop"
-                    :fixedBox="option.fixedBox" :img="option.imgUrl"
-                    :outputSize="option.size"
-                    :autoCropWidth="option.autoCropWidth"
-                    :autoCropHeight="option.autoCropHeight"
-                    :centerBox="option.centerBox"
-        ></VueCropper>
-      </div>
 
       <div>
         <Popup v-model="showMusica" position="bottom" max-height="50%">
@@ -67,7 +58,7 @@
                       :autoCropHeight="option.autoCropHeight"
                       :centerBox="option.centerBox"
                       :info="option.info"
-
+                      :canMoveBox="option.canMoveBox"
           ></VueCropper>
         </popup>
       </div>
@@ -129,10 +120,11 @@
           size: 0.5,
           autoCrop: true,
           fixedBox: true,
-          autoCropWidth: 300,
-          autoCropHeight: 200,
+          autoCropWidth: 110,
+          autoCropHeight: 105,
           centerBox: true,
-          info:false
+          info:false,
+          canMoveBox:false
         },
         showImg:false,
         showMusica: false,
