@@ -20,16 +20,16 @@
         </cell>
         <cell>
           <img src="../../../static/img/bg0.jpg" style="width:110px;height:105px;border-radius: 95%" slot="title"
-               id="touxiangimg" @click="upload"/>
-          <input ref="avatar" style="display: none" type="file" accept="image/*" v-on:change="great()"/>
+               ref="touxiangimg" @click="upload"/>
+          <input ref="avatar" style="display: none" type="file" accept="image/*" @change="great"/>
         </cell>
         <x-input is-type="china-mobile" title="手机号：" v-model="sysUser.userInfo.userInfoTel"></x-input>
         <x-input type="text" title="乐队名称："></x-input>
         <cell is-link @click.native="showMusica = true" title="音乐风格：" v-model="sysUser.userInfo.musicStyle">
           {{sysUser.userInfo.musicStyle}}
         </cell>
-        <x-input type="text" title="个性签名："></x-input>
-        <x-input type="text" title="个人简介："></x-input>
+        <x-input type="text" title="个性签名：" v-model="sysUser.userInfo.userInfoSign"></x-input>
+        <x-input type="text" title="个人简介：" v-model="sysUser.userInfo.userInfoIntro"></x-input>
 
         <x-address :raw-value="true" title="选择地址：" placeholder="请选择地址" :list="addressData" @on-shadow-change="test"
         ></x-address>
@@ -46,11 +46,11 @@
         </Popup>
       </div>
       <div>
-        <popup v-model="showImg" position="bottom"  height="50%">
+        <popup v-model="showImg" position="bottom" height="50%">
           <popup-header left-text="取消"
-                        right-text="确定" title="请选择你喜欢的音乐风格" :show-bottom-border="false"
+                        right-text="确定" title="上传头像" :show-bottom-border="false"
                         @on-click-left="showMusica = false"
-                        @on-click-right="checkMusic()"></popup-header>
+                        @on-click-right="postImg()"></popup-header>
           <VueCropper style="width:300px;height: 300px;margin:0 auto;" ref="cropper" :autoCrop="option.autoCrop"
                       :fixedBox="option.fixedBox" :img="option.imgUrl"
                       :outputSize="option.size"
@@ -123,14 +123,14 @@
           autoCropWidth: 110,
           autoCropHeight: 105,
           centerBox: true,
-          info:false,
-          canMoveBox:false
+          info: false,
+          canMoveBox: false
         },
-        showImg:false,
+        showImg: false,
         showMusica: false,
         musicaList: ['1', '2', '3'],
         addressData: ChinaAddressV4Data,
-        iconType: 'error',
+        iconType: '',
         sysUser: {
           userName: '',
           userPass: '',
@@ -148,6 +148,7 @@
         }
       }
     },
+
     methods: {
       checkMusic() {
         let musica1 = this.$refs.musica.getFullValue();
@@ -166,15 +167,17 @@
         this.sysUser.userInfo.address = names;
       },
       checkUserName(val) {
-        console.log(val);
+       // console.log(val);
         if (val == '') {
           this.iconType = 'error';
-          console.log(this.iconType);
+      //    console.log(this.iconType);
         } else {
           this.iconType = 'success';
         }
       },
+      //提交注册
       regist() {
+        console.log(this.sysUser);
         this.$axios.post('http://localhost:8090/userInfo/regist', this.sysUser).then(
           function (data) {
             if (data.data.success == false) {
@@ -196,12 +199,27 @@
           }
         )
       },
-      great() {
-        this.showImg = true;
 
+      //选择图片
+      great(file) {
+        let th = this;
+        let f = this.$refs.avatar.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(f);
+        reader.onload = function (e) {
+          th.option.imgUrl = e.target.result;
+        };
+        this.showImg = true;
       },
+      //截图完成
       postImg() {
-        this.$axios.post()
+        let d = this;
+        this.$refs.cropper.getCropData((data) => {
+        //  console.log(data);
+          d.$refs.touxiangimg.src = data;
+          d.sysUser.userInfo.userInfoImg = data;
+        });
+        this.showImg = false;
       },
       upload() {
         this.$refs.avatar.click();
